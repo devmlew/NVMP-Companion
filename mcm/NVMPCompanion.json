@@ -1,0 +1,32 @@
+{
+    "modName": "NVMPCompanion",
+    "displayName": "NVMP Companion",
+    "description": "",
+    "saveFile": "NVMPCompanion.ini",
+    "minMCMVersion": 1.00,
+    "submenus": {
+        "0": {
+            "listTitle": "Settings",
+            "pageTitle": "NVMP Companion",
+            "active": 1,
+            "columns": 1,
+            "enable": 1,
+            "options": {
+                "1": {
+                    "type": 0,
+                    "title": "Controls",
+                    "enable": 1
+                },
+                "2": {
+                    "type": 3,
+                    "title": "Mode Toggle Key",
+                    "mouse": "Key to cycle between MP, Hybrid, and Singleplayer modes. Default: F9",
+                    "enable": 1,
+                    "vars": [
+                        { "configINI": "Controls:iToggleKey", "default": 67 }
+                    ]
+                }
+            }
+        }
+    }
+}

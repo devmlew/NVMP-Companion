@@ -1,0 +1,55 @@
+# Build artifacts
+build/
+*/build/
+*.obj
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.log
+*.suo
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.aps
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+*.vcxproj
+*.vcxproj.filters
+*.sln
+ALL_BUILD*
+ZERO_CHECK*
+Win32/
+Release/
+Debug/
+x64/
+
+# Binaries (patched DLLs and EXEs from RE work)
+*.dll
+*.exe
+
+# Ghidra project files
+ghidra_project/
+
+# Decompile dumps
+*.txt.bak
+
+# Large archives
+*.zip
+
+# RE artifacts
+build_release_client*/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*~
+
+# OS
+Thumbs.db
+.DS_Store
