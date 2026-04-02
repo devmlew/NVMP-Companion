@@ -40,11 +40,12 @@ jobs:
         tar -acf nvmp-companion-server.zip server
 
     - name: Generate checksums
+      shell: pwsh
       run: |
         cd release
-        certutil -hashfile nvmp-companion-client.zip SHA256 > checksums.txt
-        echo. >> checksums.txt
-        certutil -hashfile nvmp-companion-server.zip SHA256 >> checksums.txt
+        $client = (Get-FileHash nvmp-companion-client.zip -Algorithm SHA256).Hash
+        $server = (Get-FileHash nvmp-companion-server.zip -Algorithm SHA256).Hash
+        "nvmp-companion-client.zip: $client`nnvmp-companion-server.zip: $server" | Out-File checksums.txt -Encoding utf8
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
