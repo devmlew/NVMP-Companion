@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build nvmp_companion
+      run: |
+        cd nvmp_companion
+        cmake -B build -G "Visual Studio 17 2022" -A Win32
+        cmake --build build --config Release
+
+    - name: Build nvmp_server_hook
+      run: |
+        cd nvmp_server_hook
+        cmake -B build -G "Visual Studio 17 2022" -A Win32
+        cmake --build build --config Release
+
+    - name: Package client files
+      run: |
+        mkdir release\client
+        copy nvmp_companion\build\bin\Release\nvmp_companion.dll release\client\
+        copy mcm\NVMPCompanion.json release\client\
+        cd release
+        tar -acf nvmp-companion-client.zip client
+
+    - name: Package server files
+      run: |
+        mkdir release\server
+        copy nvmp_server_hook\build\bin\Release\nvmp_server_hook.dll release\server\
+        copy nvmp_server_hook\build\bin\Release\nvmp_inject.exe release\server\
+        cd release
+        tar -acf nvmp-companion-server.zip server
+
+    - name: Generate checksums
+      run: |
+        cd release
+        certutil -hashfile nvmp-companion-client.zip SHA256 > checksums.txt
+        echo. >> checksums.txt
+        certutil -hashfile nvmp-companion-server.zip SHA256 >> checksums.txt
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          release/nvmp-companion-client.zip
+          release/nvmp-companion-server.zip
+          release/checksums.txt
+        generate_release_notes: true
